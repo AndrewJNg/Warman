@@ -28,7 +28,7 @@ double straightSetpoint, straightInput, straightOutput;
 int currSpeedEncLeft = 0; 
 int currSpeedEncRight = 0;
 
-int averageSpeed = 2700; // set average speed of the mechanism to 2750
+int averageSpeed = 2700; // set average speed of the mechanism to 2700
 int speedDiff = 500; // set different to be 500 , positive means backSpin, negative means topSpin
 
 #include "PS3.h"
@@ -47,7 +47,7 @@ void setup() {
   PS3_setup();
   Enc_setup();
   PID_setup();
-  Motor_setup();
+  flywheelMotor_setup();
   OLED_setup();
   
 

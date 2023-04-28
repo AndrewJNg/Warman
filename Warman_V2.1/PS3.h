@@ -45,28 +45,72 @@ void notify() {
   //    stick_RY = 0;
   //  }
 
-  if ( Ps3.event.button_down.triangle )KpLeft = KpLeft + 0.1;
-  if ( Ps3.event.button_down.cross )KpLeft = KpLeft - 0.1;
+  // if ( Ps3.event.button_down.up )
+  // {
+  //   KpLeft = KpLeft + 10;
+  //   KpRight = KpRight + 10;
+  // }
+  // if ( Ps3.event.button_down.down )
+  // {
+  //   KpLeft = KpLeft - 10;
+  //   KpRight = KpRight - 10;
+  // }
  
-  if ( Ps3.event.button_down.right ) KiLeft =  KiLeft + 0.5;
-  if ( Ps3.event.button_down.left ) KiLeft =  KiLeft - 0.5;
+
+  // if ( Ps3.event.button_down.right ) 
+  // {
+  //   KiLeft = KiLeft + 1;
+  //   KiRight = KiRight + 1;
+  // }
+  // if ( Ps3.event.button_down.left ) 
+  // {
+  //   KiLeft = KiLeft - 1;
+  //   KiRight = KiRight - 1;
+  // }
  
-  if ( Ps3.event.button_down.circle )KdLeft = KdLeft + 0.001;
-  if ( Ps3.event.button_down.square )KdLeft = KdLeft - 0.001;
-  // Servos
-  if ( Ps3.event.button_down.r1 )averageSpeed = averageSpeed + 50;
-  if ( Ps3.event.button_down.l1 )averageSpeed = averageSpeed - 50;
+  // if ( Ps3.event.button_down.circle )
+  // {
+  //   KdLeft = KdLeft + 1;
+  //   KdRight = KdRight + 1;
+  // }
+  // if ( Ps3.event.button_down.square )
+  // {
+  //   KdLeft = KdLeft - 1;
+  //   KdRight = KdRight - 1;
+  // }
   
-  if ( Ps3.event.button_down.r2 )speedDiff = speedDiff + 50;
-  if ( Ps3.event.button_down.l2 )speedDiff = speedDiff - 50;
+  // Servos
+  // if ( Ps3.event.button_down.r1 )averageSpeed = averageSpeed + 50;
+  // if ( Ps3.event.button_down.l1 )averageSpeed = averageSpeed - 50;
+  
+  // if ( Ps3.event.button_down.r2 )speedDiff = speedDiff + 50;
+  // if ( Ps3.event.button_down.l2 )speedDiff = speedDiff - 50;
+  
+  if ( Ps3.event.button_down.r1 )averageSpeed = averageSpeed + 10;
+  if ( Ps3.event.button_down.l1 )averageSpeed = averageSpeed - 10;
+  
+  if ( Ps3.event.button_down.r2 )averageSpeed = 1430;
+  if ( Ps3.event.button_down.l2 )averageSpeed = 2150;
+  // if ( Ps3.event.button_down.r1 )averageSpeed = 1000;
+  // if ( Ps3.event.button_down.l1 )averageSpeed = 2000;
+  
+  // if ( Ps3.event.button_down.r2 )speedDiff = speedDiff + 10;
+  // if ( Ps3.event.button_down.l2 )speedDiff = speedDiff - 10;
+  
+  if ( Ps3.event.button_down.up )averageSpeed = averageSpeed + 10;
+  if ( Ps3.event.button_down.down )averageSpeed = averageSpeed - 10;
+  
+  if ( Ps3.event.button_down.right )speedDiff = speedDiff + 10;
+  if ( Ps3.event.button_down.left )speedDiff = speedDiff - 10;
+
   // if (Ps3.event.button_down.r1) R1 = 1;
   // if (Ps3.event.button_up.r1) R1 = 0;
   // if (Ps3.event.button_down.l1) L1 = 1;
   // if (Ps3.event.button_up.l1) L1 = 0;
-  // if (Ps3.event.button_down.square) Square = 1;
+  if (Ps3.event.button_down.cross) Start2 = 1;
   // if (Ps3.event.button_up.square) Square = 0;
-  // if (Ps3.event.button_down.triangle) Triangle = 1;
-  // if (Ps3.event.button_up.triangle) Triangle = 0;
+  if (Ps3.event.button_down.start) Start = 1;
+  if (Ps3.event.button_down.triangle) Start3 = 1;
 
   // // Stepper
   // if (Ps3.event.button_down.r2) R2 = 1;
