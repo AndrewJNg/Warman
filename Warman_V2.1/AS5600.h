@@ -1,16 +1,16 @@
-#include <Wire.h>
+// #include <Wire.h>
 // #include <driver/adc.h>
 
 // Left encoder I2C pins
-const byte SDA_1 = 21;
-const byte SCL_1 = 22;
+// const byte SDA_1 = 21;
+// const byte SCL_1 = 22;
 
 // Right encoder I2C pins
-const byte SDA_2 = 18;
-const byte SCL_2 = 19;
+// const byte SDA_2 = 18;
+// const byte SCL_2 = 19;
 
 //TwoWire I2Cone = TwoWire(0);
-TwoWire I2Ctwo = TwoWire(1);
+// TwoWire I2Ctwo = TwoWire(1);
 
 // function prototypes
 // setup
@@ -39,7 +39,7 @@ void Enc_setup() {
   // adc1_config_channel_atten(ADC1_CHANNEL_3, ADC_ATTEN_DB_11);// using GPIO 39
   // adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_DB_11);// using GPIO 36
 }
-
+/*
 void AS5600_I2C_setup_1() {
   Wire.begin(SDA_1, SCL_1, 400000);
   delay(5);
@@ -127,6 +127,7 @@ void AS5600_I2C_setup_2() {
   I2Ctwo.endTransmission();
   delay(5);
 }
+*/
 
 int AS5600_I2C_update_1() {
 
@@ -176,13 +177,32 @@ int AS5600_I2C_update_2() {
   return value;
 }
 
+
 void enc_motor_update() {
   static double prevAngle[2] = { 0, 0 };
   static int multiplyAngle[2] = { 0, 0 };
 
-  currAngle[0] = AS5600_I2C_update_1();
+  // currAngle[0] = lpEncTop.filt(analogRead(39));
+  currAngle[0] =AS5600_I2C_update_1();
+
   // currAngle[0] = 0;
+  // currAngle[1] = lpEncBottom.filt(analogRead(34));
   currAngle[1] = AS5600_I2C_update_2();
+
+  // Serial.print(AS5600_I2C_update_1());
+  // Serial.print(" ");
+  // Serial.print(currAngle[0]);
+  // Serial.print("\t");
+  // Serial.print(4096, 0);
+  // Serial.print("\t");
+  // Serial.print(0, 0);
+  // Serial.print("\t");
+  // Serial.println();
+  // delayMicroseconds(200);
+
+
+
+
   for (int i = 0; i < 2; i++) {
     //    0 = -180
     //    1024 = -90
@@ -212,8 +232,8 @@ void enc_motor_update() {
 
     // single rotation overflow detection
     // if ((prevAngle[i] > currAngle[i]))
-      //   if()
-      // multiplyAngle[i]++;
+    //   if()
+    // multiplyAngle[i]++;
 
 
 

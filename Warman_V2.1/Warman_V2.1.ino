@@ -6,7 +6,7 @@ float tof_distance = 0;
 boolean Start = false;
 boolean Start2 = false;
 boolean Start3 = false;
-unsigned long currentMillis =0;
+unsigned long currentMillis = 0;
 
 //////////////////////////////////////////////////////////////////////////////
 double startPoint = 0;
@@ -14,8 +14,8 @@ double endPoint = 0;
 int Mode = 1;  // set mode 1 as default
 unsigned long StartTimer = 0;
 
-double KpLeft = 0, KiLeft = 8.0, KdLeft = 2.00;
-double KpRight = 0, KiRight = 8.0, KdRight = 2.00;
+double KpLeft = 0, KiLeft = 10.0, KdLeft = 0.00;
+double KpRight = 0, KiRight = 10.0, KdRight = 0.00;
 
 double rpmSetLeft, InputRpmLeft, OutputLeftMotor;
 double rpmSetRight, InputRpmRight, OutputRightMotor;
@@ -32,8 +32,9 @@ int speedDiff = 0;     // set different to be 500 , positive means backSpin, neg
 
 //////////////////////////////////////////////////////////////////////////////
 
+#include "lowPass.h"
 #include "tof.h"
-// #include "MPU6050.h"
+#include "MPU6050.h"
 #include "PS3.h"`
 
 #include "AS5600.h"
@@ -49,14 +50,12 @@ void setup() {
   Serial.begin(115200);
 
   // // Additional Macro Setups
-  // OTA_setup();
-  // User_interface_setup();
-  // MPU6050_setup();
 
   // Macro Setups
   PS3_setup();
   Enc_setup();
   PID_setup();
+  // Gyro_setup() ;
 
   Movement_setup();
   flywheelMotor_setup();
@@ -83,16 +82,28 @@ void setup() {
 }
 
 void loop() {
+  // Serial.println(gyroZ);
+  // system() ;
 
   if (Start) {
     // Serial.println(Start);
+
+    // Align to squash silo
+    
+    ball_gripper();
     do {
       mecanum_move(100, 80);  // speed 100, at 80 degree
     } while (tof_distance >= 600);
     mecanum_move(0, 0);  // stop
-
     stop_delay(1000);
+
     launch_arm();
+
+
+
+
+
+
 
 
 
@@ -125,29 +136,28 @@ void launch_arm() {
   setPos(1, 180);  // turn to 0 degree
 }
 
-void ball_gripper()
-{
-    setPos(0, 90);
-    currentMillis = millis();
-    while ((millis() - currentMillis) < 3000) {
-      system();
-      PS3_move(stick_LX, stick_LY, stick_RX, stick_RY);
-    }
-    setPos(0, 0);
+void ball_gripper() {
+  setPos(0, 90);
+  currentMillis = millis();
+  while ((millis() - currentMillis) < 3000) {
+    system();
+    PS3_move(stick_LX, stick_LY, stick_RX, stick_RY);
+  }
+  setPos(0, 0);
 }
 
-void stop_delay(int time_interval)
-{
-    currentMillis = millis();
-    while ((millis() - currentMillis) < time_interval) {
-      system();
-    }
+void stop_delay(int time_interval) {
+  currentMillis = millis();
+  while ((millis() - currentMillis) < time_interval) {
+    system();
+  }
 }
 
 
 
 void system() {
   tof_loop();
+  // Gyro_update();
   rpmMove(averageSpeed - speedDiff / 2, averageSpeed + speedDiff / 2);
   // rpmMove(averageSpeed - speedDiff / 2,0);
   // flywheelMotor(averageSpeed - speedDiff / 2, averageSpeed + speedDiff / 2);

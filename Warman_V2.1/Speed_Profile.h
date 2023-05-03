@@ -1,4 +1,5 @@
 
+
 float v1Filt = 0;
 float v1Prev = 0;
 float v2Filt = 0;
@@ -32,19 +33,33 @@ void rpmMove(float target_rpm_left, float target_rpm_right) {
     prevCountRight = currAngle[1];
     EncprevMicro = micros();
 
-    float v1 = abs(rpmLeft);
 
-    v1Filt = 0.99937188 * v1Filt + 0.00031406 * v1 + 0.00031406 * v1Prev;  //0.1 hz
+    v1Filt = lpTop.filt(rpmLeft);
+    v2Filt = lpBottom.filt(rpmRight);
+
+
+
+    // delayMicroseconds(200);
+
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // float v1 = abs(rpmLeft);
+
+    // v1Filt = 0.99937188 * v1Filt + 0.00031406 * v1 + 0.00031406 * v1Prev;  //0.1 hz
     // v1Filt = 0.99686333 * v1Filt + 0.00156833 * v1 + 0.00156833 * v1Prev;  //0.5 hz
     // v1Filt = 0.98751209 * v1Filt + 0.00624395 * v1 + 0.00624395 * v1Prev;  //2 hz
     //  v1Filt = 0.854*v1Filt + 0.0728*v1+0.0828*v1Prev;            //5 hz
-    v1Prev = v1;
+    // v1Prev = v1;
 
-    float v2 = abs(rpmRight);
-    v2Filt = 0.99937188 * v2Filt + 0.00031406 * v2 + 0.00031406 * v2Prev;  //0.1 hz
+    // float v2 = abs(rpmRight);
+    // v2Filt = 0.99937188 * v2Filt + 0.00031406 * v2 + 0.00031406 * v2Prev;  //0.1 hz
     // v1Filt = 0.99686333 * v2Filt + 0.00156833 * v2 + 0.00156833 * v2Prev;  //0.5 hz
     // v2Filt = 0.98751209 * v2Filt + 0.00624395 * v2 + 0.00624395 * v2Prev;//2 hz
-    v2Prev = v2;
+    // v2Prev = v2;
+    
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     InputRpmLeft = v1Filt;
     rpmSetLeft = target_rpm_left;
@@ -62,40 +77,19 @@ void rpmMove(float target_rpm_left, float target_rpm_right) {
     currSpeedEncRight = InputRpmRight;
 
     flywheelMotor(SpeedRight, SpeedLeft);
+    // flywheelMotor(0, 0);
     // flywheelMotor(target_rpm_right,target_rpm_left);
     // motor(0, 0);
 
-
-    // Serial.print(SpeedLeft, 0);
-    // Serial.print("\t");
-    // Serial.print(SpeedRight, 0);
-    // Serial.print("\t");
-
-    // Serial.print(currAngle[0], 0);
-    // Serial.print("\t");
-    // Serial.print(currAngle[1], 0);
-    // Serial.print("\t");
-    // Serial.print(rpmLeft, 0);
-    // Serial.print("\t");
-    // Serial.print(rpmRight, 0);
-    // Serial.print("\t");
-    // Serial.print(0, 0);
-    // Serial.print("\t");
-
-    // Serial.print(currAngle[0]);
-    // Serial.print("\t");
-
-    // Serial.print("KpLeft: ");
-    // Serial.print(KpLeft);
-    // Serial.print("\t");
-    // Serial.print("KiLeft: ");
-    // Serial.print(KiLeft);
-    // Serial.print("\t");
-    // Serial.print("KdLeft: ");
-    // Serial.print(KdLeft,5);
-
-    // Serial.print("\t");
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Serial debugging
     if ((millis() - pastSerialMillis) > 100) {
+      // Serial.print(rpmLeft, 0);
+      // Serial.print("\t");
+      // Serial.print(rpmRight, 0);
+      // Serial.print("\t");
+
+
       Serial.print(InputRpmLeft, 0);
       Serial.print("\t");
       Serial.print(InputRpmRight, 0);
@@ -103,9 +97,11 @@ void rpmMove(float target_rpm_left, float target_rpm_right) {
 
       Serial.print(target_rpm_left, 0);
       Serial.print("\t");
-      Serial.print(target_rpm_right, 0);
-      Serial.print("\t");
+      // Serial.print(target_rpm_right, 0);
+      // Serial.print("\t");
 
+      Serial.print(3000, 0);
+      Serial.print("\t");
       Serial.print(0, 0);
       Serial.print("\t");
 
