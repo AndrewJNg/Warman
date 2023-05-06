@@ -83,120 +83,88 @@ void setup() {
 }
 
 void loop() {
-  // Serial.println(AS5600_I2C_update_2());
   system();
-
   if (Start) {
-    // averageSpeed = 1430;  // set average speed of the mechanism to 2700
 
     // boolean driveLeft, boolean leftSilo, boolean leaveSilo
     // time_drive_on_wall(boolean driveLeft, int time)
-    tof_drive_on_wall(true, true, false);
+    // reverse(int speed, int time);
 
-    ball_gripper();  // pickup first ball
+    averageSpeed = 1200;                   // set average speed of the mechanism to 1180
+    tof_drive_on_wall(true, true, false);  // drive left until it hit silo
     time_drive_on_wall(true, 1000);
+    ball_gripper();  // pickup first ball
 
+    tof_drive_on_wall(true, true, true);  // drive left until it leave silo
+    time_drive_on_wall(true, 1500);
+
+    // lift arm up halfway
+    setPos(0, 135);
+    stop_delay(500);
+
+    tof_drive_on_wall(false, true, false);  // drive right until it hit silo
+
+    shoot();         // Shoot
+    ball_gripper();  // pickup second ball
+    shoot();         // Shoot
+
+    time_drive_on_wall(true, 3000);
+    ball_gripper();                         // pickup third ball
+
+    tof_drive_on_wall(false, true, false);  // drive right until it hit silo
+
+    shoot();
     
-    tof_drive_on_wall(true, true, true);
-
-
-
-
-
-    do {
-      mecanum_move(100, -60, 0);
-    } while (tof_distance >= 600);  // drive left until it leave silo
-    mecanum_move(0, 0, 0);
-    stop_delay(2000);
-
-/*
-    shoot();  // Shoot
-    mecanum_move(0, 0, 0);
-    stop_delay(2000);
-
-    ball_gripper();  // pickup second ball
-    mecanum_move(0, 0, 0);
-    stop_delay(2000);
-
-    shoot();  // Shoot
-
-
-    currentMillis = millis();
-    while ((millis() - currentMillis) < 2000) {
-      mecanum_move(100, -60, 0);  // drive left until it pick up squash
-      system();
-    }
-    mecanum_move(0, 0, 0);
-    stop_delay(2000);
-
-    ball_gripper();  // pickup second ball
-    mecanum_move(0, 0, 0);
-    stop_delay(2000);
-
-
-    do {
-      mecanum_move(100, 60, 0);
-    } while (tof_distance >= 600);  // drive right until it hit silo
-    mecanum_move(0, 0, 0);
-    stop_delay(2000);
-
-    shoot();  // Shoot
-    mecanum_move(0, 0, 0);
-    stop_delay(2000);
-
-
+    averageSpeed = 2150;                   // set average speed of the mechanism to 2150
+    time_drive_on_wall(true, 4000);
 
     // lift arm up
     setPos(0, 85);
+    stop_delay(500);
+
+
+    forward(-100, 1000);  // reverse
+    turn180(150, 1050);   // turn 180
+    forward(100, 750);   // forward
+
+    forward(100, 500);   // forward
+    tof_drive_on_wall(false, false, true);  // drive right until it leave silo
+
+    // lift arm down    
+    setPos(0, 180);
+    stop_delay(500);
+
+
+    tof_drive_on_wall(true, true, false);  // drive left until it hit silo
+    time_drive_on_wall(true, 1000);
+    ball_gripper();  // pickup first tennis ball
+
+    // tof_drive_on_wall(false, true, false);  // drive right until it hit silo
+    
+    // stop_delay(5000);
+    // shoot();         // Shoot
+
+    time_drive_on_wall(true, 3000);
+
+
+    // lift arm up
+    setPos(0, 85);   // pickup 2nd & 3rd tennis ball
+    stop_delay(500);
+
+    tof_drive_on_wall(false, true, false);  // drive right until it hit silo
+
+    stop_delay(5000);
+    shoot();         // Shoot
+    stop_delay(5000);
+    shoot();         // Shoot
+    stop_delay(5000);
+    shoot();         // Shoot
     stop_delay(2000);
+    
+    averageSpeed = 0;                   // set average speed of the mechanism to 2150
+    mecanum_move(150, -100, 0);
+    delay(1500);
 
-
-    currentMillis = millis();
-    while ((millis() - currentMillis) < 1000) {
-      mecanum_move(100, 60, 0);  // drive right a bit
-      system();
-    }
-    // mecanum_move(0, 0, 0);
-    // stop_delay(2000);
-
-    do {
-      mecanum_move(100, 60, 0);
-    } while (tof_distance <= 600);  // drive right until it leave silo
-    stop_delay(1500);
-
-    mecanum_move(0, 0, 0);
-    stop_delay(2000);
-
-
-
-
-    // reverse
-    currentMillis = millis();
-    while ((millis() - currentMillis) < 2000) {
-      mecanum_move(100, -180, 0);
-      system();
-    }
-    mecanum_move(0, 0, 0);
-    stop_delay(2000);
-
-
-
-
-
-
-
-
-
-
-
-    // do {
-    //   mecanum_move(100, 80);  // speed 100, at 80 degree
-    // } while (tof_distance >= 600);
-
-
-    // mecanum_move(0, 0,0);  // stop
-    // stop_delay(1000);
-    */
 
 
 
@@ -234,6 +202,8 @@ void shoot() {
     system();
   }
   setPos(1, 175);  // turn to 0 degree
+  mecanum_move(0, 0, 0);
+  stop_delay(500);
 }
 
 void ball_gripper() {
@@ -245,7 +215,7 @@ void ball_gripper() {
   }
   setPos(0, 180);
   mecanum_move(0, 0, 0);
-  stop_delay(2000);
+  stop_delay(500);
 }
 
 void stop_delay(int time_interval) {
@@ -274,7 +244,7 @@ void tof_drive_on_wall(boolean driveLeft, boolean leftSilo, boolean leaveSilo) {
 
 
   mecanum_move(0, 0, 0);
-  stop_delay(2000);
+  stop_delay(500);
 }
 
 void time_drive_on_wall(boolean driveLeft, int time) {
@@ -285,7 +255,33 @@ void time_drive_on_wall(boolean driveLeft, int time) {
     system();
   }
   mecanum_move(0, 0, 0);
-  stop_delay(2000);
+  stop_delay(200);
+}
+
+void forward(int speed, int time) {
+
+  currentMillis = millis();
+  while ((millis() - currentMillis) < time) {
+    if (speed < 0)
+      mecanum_move(abs(speed), -180, 0);
+    else
+      mecanum_move(abs(speed), 0, 0);
+
+    system();
+  }
+  mecanum_move(0, 0, 0);
+  stop_delay(500);
+}
+
+void turn180(int speed, int time) {
+
+  currentMillis = millis();
+  while ((millis() - currentMillis) < time) {
+    mecanum_move(0, 0, speed);
+    system();
+  }
+  mecanum_move(0, 0, 0);
+  stop_delay(500);
 }
 
 void system() {
