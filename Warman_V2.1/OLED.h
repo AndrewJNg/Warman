@@ -147,9 +147,9 @@ void OLED_display_stats() {
     OLED.println(speedDiff);
     
     OLED.print("Top: \t");
-    OLED.println(currSpeedEncRight);
-    OLED.print("Bottom: \t");
     OLED.println(currSpeedEncLeft);
+    OLED.print("Bottom: \t");
+    OLED.println(currSpeedEncRight);
     // OLED.print("Diff: \t");
     
     // OLED.println(speedDiff);

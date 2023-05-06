@@ -97,7 +97,7 @@ void Movement_setup() {
   }
   
 }
-void mecanum_move(int Speed, float angle_degree) {
+void mecanum_move(int Speed, float angle_degree, int turn_Speed) {
   // angle from 0 to 2*pi
   float angle = angle_degree* PI / 180;
 
@@ -105,7 +105,7 @@ void mecanum_move(int Speed, float angle_degree) {
   float Speed_total_percent = Speed;
 
   // turn speed for rotational movement
-  float turn_Speed = 0;
+  // float turn_Speed = 0;
 
   // filter to ignore inputs below 15 from controller for rotation only
   if (abs(RX) > 15) turn_Speed = map(RX, -128, 127, -PWM_resolution_max_value, PWM_resolution_max_value);

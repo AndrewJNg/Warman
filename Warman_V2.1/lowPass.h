@@ -78,9 +78,9 @@ public:
   }
 };
 
-// Filter instance
-LowPass<1> lpTop(0.1, 1e3, true);
-LowPass<1> lpBottom(0.1, 1e3, true);
+// // Filter instance
+// LowPass<1> lpTop(0.1, 1e3, true);
+// LowPass<1> lpBottom(0.1, 1e3, true);
 
 // LowPass<1> lpEncTop(3, 1e3, true);
 // LowPass<1> lpEncBottom(3, 1e3, true);

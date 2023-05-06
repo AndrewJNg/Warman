@@ -86,11 +86,13 @@ void notify() {
   // if ( Ps3.event.button_down.r2 )speedDiff = speedDiff + 50;
   // if ( Ps3.event.button_down.l2 )speedDiff = speedDiff - 50;
   
-  if ( Ps3.event.button_down.r1 )averageSpeed = averageSpeed + 10;
-  if ( Ps3.event.button_down.l1 )averageSpeed = averageSpeed - 10;
+  if ( Ps3.event.button_down.r1 )averageSpeed = averageSpeed + 5;
+  if ( Ps3.event.button_down.l1 )averageSpeed = averageSpeed - 5;
   
-  if ( Ps3.event.button_down.r2 )averageSpeed = 1430;
-  if ( Ps3.event.button_down.l2 )averageSpeed = 2150;
+  if ( Ps3.event.button_down.r3 )averageSpeed = 2150;
+  if ( Ps3.event.button_down.l3 )averageSpeed = 1430;
+  if ( Ps3.event.button_down.select )averageSpeed = 0;
+
   // if ( Ps3.event.button_down.r1 )averageSpeed = 1000;
   // if ( Ps3.event.button_down.l1 )averageSpeed = 2000;
   

@@ -216,6 +216,9 @@ void enc_motor_update() {
     // Serial.print("\t");
     // /*
     // 4 quadrant overflow counter
+    // if ((prevAngle[i] >= 3072 && prevAngle[i] <= 4096) && (currAngle[i] >= 0 && currAngle[i] <= 1024)) multiplyAngle[i]++;
+    // else if ((prevAngle[i] >= 0 && prevAngle[i] <= 1024) && (currAngle[i] >= 3072 && currAngle[i] <= 4096)) multiplyAngle[i]--;
+    
     if ((prevAngle[i] >= 3072 && prevAngle[i] <= 4096) && (currAngle[i] >= 0 && currAngle[i] <= 1024)) multiplyAngle[i]++;
     else if ((prevAngle[i] >= 0 && prevAngle[i] <= 1024) && (currAngle[i] >= 3072 && currAngle[i] <= 4096)) multiplyAngle[i]--;
     // */

@@ -11,6 +11,10 @@ int prevCountRight = 0;
 unsigned long EncprevMicro = 0;
 static unsigned long pastSerialMillis = 0;
 
+
+LowPass<1> lpTop(0.1, 1e3, true);
+LowPass<1> lpBottom(0.1, 1e3, true);
+
 // void rpmMove(float target_rpm_right, float target_rpm_left) {
 void rpmMove(float target_rpm_left, float target_rpm_right) {
 
@@ -34,14 +38,18 @@ void rpmMove(float target_rpm_left, float target_rpm_right) {
     EncprevMicro = micros();
 
 
-    v1Filt = lpTop.filt(rpmLeft);
-    v2Filt = lpBottom.filt(rpmRight);
+    v1Filt = lpTop.filt(abs(rpmLeft));
+    v2Filt = lpBottom.filt(abs(rpmRight));
+    
+
+    // v1Filt = abs(rpmLeft);
+    // v2Filt = abs(rpmRight);
 
 
 
     // delayMicroseconds(200);
 
-    
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // float v1 = abs(rpmLeft);
 
@@ -56,7 +64,7 @@ void rpmMove(float target_rpm_left, float target_rpm_right) {
     // v1Filt = 0.99686333 * v2Filt + 0.00156833 * v2 + 0.00156833 * v2Prev;  //0.5 hz
     // v2Filt = 0.98751209 * v2Filt + 0.00624395 * v2 + 0.00624395 * v2Prev;//2 hz
     // v2Prev = v2;
-    
+
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +86,7 @@ void rpmMove(float target_rpm_left, float target_rpm_right) {
 
     flywheelMotor(SpeedRight, SpeedLeft);
     // flywheelMotor(0, 0);
-    // flywheelMotor(target_rpm_right,target_rpm_left);
+    // flywheelMotor(target_rpm_right, target_rpm_left);
     // motor(0, 0);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,6 +112,9 @@ void rpmMove(float target_rpm_left, float target_rpm_right) {
       Serial.print("\t");
       Serial.print(0, 0);
       Serial.print("\t");
+      
+      // Serial.print(AS5600_I2C_update_2());
+      // Serial.print("\t");
 
       Serial.println();
       pastSerialMillis = millis();
